@@ -3,6 +3,11 @@ spring-board CRUD
 
 SpringBoot + MyBatis
 
+## 개발환경
+openjdk 17  
+springboot 3.2.5  
+mybatis 3.0.2
+
 
 ### 요구사항
 . 회원 가입 기능
