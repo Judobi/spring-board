@@ -6,7 +6,7 @@ SpringBoot + MyBatis
 ## 개발환경
 openjdk 17  
 springboot 3.2.5  
-mybatis 3.0.2
+mybatis 3.0.3
 
 
 ### 요구사항
