@@ -15,6 +15,8 @@ public class UserSignUp {
     @NotBlank(message = "닉네임을 입력해주세요")
     public String nickname;
 
+    public UserSignUp(){}
+
     public String getUser_id() {
         return user_id;
     }
@@ -25,5 +27,15 @@ public class UserSignUp {
 
     public String getNickname() {
         return nickname;
+    }
+
+
+    @Override
+    public String toString() {
+        return "UserSignUp{" +
+                "user_id='" + user_id + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                '}';
     }
 }
