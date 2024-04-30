@@ -9,6 +9,7 @@
         <setting name="jdbcTypeForNull" value="NULL" />
     </settings>
     <mappers>
-        <mapper resource="mapper/AccessMapper.xml"/>
+        <mapper resource="mapper/TestMapper.xml"/>
+        <mapper resource="mapper/UserMapper.xml"/>
     </mappers>
 </configuration>
