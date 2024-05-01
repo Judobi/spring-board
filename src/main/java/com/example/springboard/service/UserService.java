@@ -16,12 +16,12 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public User login(String id, String pw){
-        return userMapper.findByLoginIdAndPw(id, pw);
+    public User login(UserRequest userRequest){
+        return userMapper.findByLoginIdAndPw(userRequest);
     }
 
-    public boolean checkLoginID(String id){
-        return userMapper.checkLoginId(id);
+    public boolean checkLoginID(String user_id){
+        return userMapper.checkLoginId(user_id);
     }
 
 
@@ -38,5 +38,9 @@ public class UserService {
     @Transactional
     public void userDelete(String user_id){
         userMapper.userDelete(user_id);
+    }
+
+    public User getUserDetail(String user_id){
+        return userMapper.getUserDetail(user_id);
     }
 }

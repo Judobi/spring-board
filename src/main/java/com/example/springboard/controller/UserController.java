@@ -19,14 +19,21 @@ public class UserController {
         this.userService = userService;
     }
 
-    //todo - 로그인 토큰 구현 후, 로그인 성공시 토큰 발급 추가 필요 & formdata 입력방식을 json으로 받는 방식으로 변경?
-    // 그리고 탈퇴한 유저의 경우 지금은 아이디 비밀번호 체크라고 나오는데 이부분에 대한 안내메시지 출력하도록 하는 분기처리가 필요.
+
+    /**
+     * 로그인
+     * @param userRequest id, pw가 포함된 객체
+     * @return 로그인 여부에 관련된 응답
+     * ----
+     * todo - 로그인 토큰 구현 후, 로그인 성공시 토큰 발급 추가 필요
+     *  그리고 탈퇴한 유저의 경우 지금은 아이디 비밀번호 체크라고 나오는데 이부분에 대한 안내메시지 출력하도록 하는 분기처리가 필요.
+     * select 결과로 받은 user 객체에서 accessid를 포함해서 access_token 발급 예정
+     */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam(value = "user_id") @NotBlank String id,
-                      @RequestParam(value = "password") @NotBlank String pw){
+    public ResponseEntity<?> login(@RequestBody UserRequest userRequest){
 
         // loginService.login 실행 -> 성공 : user 객체 반환, 실패 : null
-        User loginUser = userService.login(id,pw);
+        User loginUser = userService.login(userRequest);
         if(loginUser == null){
             return ResponseEntity
                     .status(StatusCode.LOGIN_FAIL.getStatus())
@@ -39,10 +46,20 @@ public class UserController {
     }
 
     /**
+     * 로그아웃
+     * @param userRequest userid와 refresh토큰을 받아서 디비에서 refresh토큰 제거
+     */
+    @PostMapping("/logout")
+    @ResponseStatus(HttpStatus.OK)
+    public void logout(@RequestBody UserRequest userRequest){
+        //토큰 구현시 추가 예정
+    }
+
+    /**
      * 아이디 중복 확인
      * @param id 회원가입하고 싶은 아이디
      */
-    @GetMapping("/login/{id}")
+    @GetMapping("/signup/{id}")
     public ResponseEntity<?> checkLoginID(@PathVariable("id") @NotBlank String id){
         if(userService.checkLoginID(id)){
             return ResponseEntity
@@ -75,11 +92,32 @@ public class UserController {
     }
 
     /**
+     * 회원정보 조회
+     * @param id
+     * @return user 객체를 반환되나 uid와 accessid를 제외해서 select를 해와서 이 두 값은 0으로 전달.
+     * ---
+     * 고민
+     * 1. response를 위한 객체를 따로 만들거나 손수 user.getter로 json 전달할지
+     * 2. 지금 그대로 사용해서 user객체 재사용하기. 이 경우 불필요한 데이터가 포함되서 전달(uid : 0, accessid : 0)
+     */
+    @GetMapping("/members/{id}")
+    public ResponseEntity<?> getUserDetail(@PathVariable("id") String id){
+        // user객체로 받아오는데 이 객체에는 uid와 accesid가 포함되어있다.
+        User user = userService.getUserDetail(id);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
+
+
+    /**
      * 회원정보 수정(=비밀번호 변경)
      * @param id 회원 아이디 (uid 아님)
      * @param userRequest 변경할 정보 객체
+     * ---
+     * 변경해야할 요소에 대한 고민
+     * 1. 현재 비밀번호를 확인 후, 이 api를 사용한다는 가정 -> 비밀번호 확인 api필요
+     * 2. 변경할 비밀번호와 현재 비밀번호를 동시에 받기 -> 로직 수정 필요 + 현재비밀번호 미일치에 대한 예외 추가
      */
-    @PutMapping("/member/{id}")
+    @PutMapping("/members/{id}")
     public ResponseEntity<?> updatePw(@PathVariable("id") String id, @Valid @RequestBody UserRequest userRequest, BindingResult bindingResult){
         //todo - 추후 이부분 중복 유지시 메소드화 하기
         if(bindingResult.hasErrors()){
@@ -95,6 +133,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(StatusCode.USER_UPDATE_SUCCESS.getMessage());
     }
 
+    // 이 경우 외부에서 유저 id와 api 링크만 알면 회원탈퇴가 가능. 조치가 필요함 -> access 토큰 조회
     @DeleteMapping("/members/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteUser(@PathVariable String id){

@@ -7,8 +7,10 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
 
-    User findByLoginIdAndPw(String id, String pw);
-    boolean checkLoginId(String id);
+    User findByLoginIdAndPw(UserRequest userRequest);
+
+    User getUserDetail(String user_id);
+    boolean checkLoginId(String user_id);
 
     void userSignUp(UserRequest userRequest);
 
