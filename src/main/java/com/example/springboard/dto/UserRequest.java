@@ -3,7 +3,7 @@ package com.example.springboard.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-public class UserSignUp {
+public class UserRequest {
     @NotBlank(message = "아이디를 입력해주세요")
     public String user_id;
 
@@ -15,7 +15,7 @@ public class UserSignUp {
     @NotBlank(message = "닉네임을 입력해주세요")
     public String nickname;
 
-    public UserSignUp(){}
+    public UserRequest(){}
 
     public String getUser_id() {
         return user_id;

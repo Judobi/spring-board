@@ -8,6 +8,7 @@ public enum StatusCode {
     LOGIN_ID_SUCCESS(HttpStatus.OK, "사용가능한 아이디입니다."),
     LOGIN_SUCCESS(HttpStatus.OK, "로그인 성공했습니다."),
     SIGNUP_SUCCESS(HttpStatus.CREATED, "회원가입이 완료되었습니다"),
+    USER_UPDATE_SUCCESS(HttpStatus.OK,"회원정보 변경을 성공했습니다."),
 
     // 실패
     LOGIN_FAIL(HttpStatus.BAD_REQUEST, "아이디 또는 비밀번호가 틀렸습니다"),

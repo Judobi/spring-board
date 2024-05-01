@@ -15,7 +15,7 @@
         select exists(
             select user_id
             from user
-            where user_id = #{id}
+            where user_id = #{id} and time_deleted IS NULL
         )
     </select>
 
@@ -32,5 +32,22 @@
                         )
 
     </insert>
+
+    <!-- 회원정보 수정(비밀번호 수정) -->
+    <update id="userUpdate">
+        update user
+        set password = #{password},
+            nickname = #{nickname}
+        where user_id = #{user_id}
+    </update>
+
+    <!-- 회원탈퇴 -->
+    <!-- update 태그를 고민했으나 동일한 속성을 가지고 delete기능이라는 것을 명시적으로 표현을 위해 delete를 할지 쿼리는 updete니 update로 할지 고민  -->
+    <update id="userDelete">
+        update user
+        set time_deleted = now(),
+            access_id = 0
+        where user_id = #{user_id}
+    </update>
 
 </mapper>

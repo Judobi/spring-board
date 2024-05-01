@@ -1,7 +1,7 @@
 package com.example.springboard.service;
 
 import com.example.springboard.dto.User;
-import com.example.springboard.dto.UserSignUp;
+import com.example.springboard.dto.UserRequest;
 import com.example.springboard.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,17 @@ public class UserService {
 
 
     @Transactional
-    public void signUp(UserSignUp userSignUp){
-        userMapper.userSignUp(userSignUp);
+    public void signUp(UserRequest userRequest){
+        userMapper.userSignUp(userRequest);
+    }
+
+    @Transactional
+    public void userUpdate(UserRequest userRequest){
+        userMapper.userUpdate(userRequest);
+    }
+
+    @Transactional
+    public void userDelete(String user_id){
+        userMapper.deleteUser(user_id);
     }
 }
