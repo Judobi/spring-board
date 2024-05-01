@@ -1,9 +1,10 @@
 package com.example.springboard.controller;
 
-import com.example.springboard.dto.User;
+import com.example.springboard.dto.UserInfoDto;
+import com.example.springboard.service.impl.UserServiceImpl;
+import com.example.springboard.vo.User;
 import com.example.springboard.dto.UserRequest;
 import com.example.springboard.global.StatusCode;
-import com.example.springboard.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
@@ -13,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
-    public UserController(UserService userService) {
+    public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
 
@@ -95,15 +96,10 @@ public class UserController {
      * 회원정보 조회
      * @param id
      * @return user 객체를 반환되나 uid와 accessid를 제외해서 select를 해와서 이 두 값은 0으로 전달.
-     * ---
-     * 고민
-     * 1. response를 위한 객체를 따로 만들거나 손수 user.getter로 json 전달할지
-     * 2. 지금 그대로 사용해서 user객체 재사용하기. 이 경우 불필요한 데이터가 포함되서 전달(uid : 0, accessid : 0)
      */
     @GetMapping("/members/{id}")
     public ResponseEntity<?> getUserDetail(@PathVariable("id") String id){
-        // user객체로 받아오는데 이 객체에는 uid와 accesid가 포함되어있다.
-        User user = userService.getUserDetail(id);
+        UserInfoDto user = new UserInfoDto(userService.getUserDetail(id));
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 

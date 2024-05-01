@@ -1,16 +1,16 @@
 package com.example.springboard.mapper;
 
-import com.example.springboard.dto.User;
+import com.example.springboard.vo.User;
 import com.example.springboard.dto.UserRequest;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper {
 
-    User findByLoginIdAndPw(UserRequest userRequest);
+    User loginIdAndPw(UserRequest userRequest);
 
-    User getUserDetail(String user_id);
-    boolean checkLoginId(String user_id);
+    User getUserDetail(String userId);
+    boolean checkLoginId(String userId);
 
     void userSignUp(UserRequest userRequest);
 
