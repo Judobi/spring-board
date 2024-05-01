@@ -19,10 +19,11 @@ public class UserController {
         this.userService = userService;
     }
 
-    //todo - 로그인 토큰 구현 후, 로그인 성공시 토큰 발급 추가 필요
+    //todo - 로그인 토큰 구현 후, 로그인 성공시 토큰 발급 추가 필요 & formdata 입력방식을 json으로 받는 방식으로 변경?
+    // 그리고 탈퇴한 유저의 경우 지금은 아이디 비밀번호 체크라고 나오는데 이부분에 대한 안내메시지 출력하도록 하는 분기처리가 필요.
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam(value = "id") @NotBlank String id,
-                      @RequestParam(value = "pw") @NotBlank String pw){
+    public ResponseEntity<?> login(@RequestParam(value = "user_id") @NotBlank String id,
+                      @RequestParam(value = "password") @NotBlank String pw){
 
         // loginService.login 실행 -> 성공 : user 객체 반환, 실패 : null
         User loginUser = userService.login(id,pw);

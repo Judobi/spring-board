@@ -37,6 +37,6 @@ public class UserService {
 
     @Transactional
     public void userDelete(String user_id){
-        userMapper.deleteUser(user_id);
+        userMapper.userDelete(user_id);
     }
 }
