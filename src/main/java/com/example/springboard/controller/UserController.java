@@ -20,14 +20,22 @@ public class UserController {
         this.userService = userService;
     }
 
+    /* todo
+     * 0501 피드백  - 수정 필요사항 (개선 후, 이 주석은 삭제)
+     * 1. 일관적인 성공, 실패(에러) 메세지 전달할 것
+     * 2. 로그인기능에서 user객체 null 체크 -> 비즈니스 로직 영역, null일 경우 return은 exception 처리로 가능
+     * 3. 비즈니스 로직을 잘 구분해서 서비스로 옮길 것. controller에 있어서는 안된다.
+     * 4. 프로세스를 플로우 차트 그리면서 정리 & 공유
+     */
+
 
     /**
      * 로그인
      * @param userRequest id, pw가 포함된 객체
      * @return 로그인 여부에 관련된 응답
      * ----
-     * todo - 로그인 토큰 구현 후, 로그인 성공시 토큰 발급 추가 필요
-     *  그리고 탈퇴한 유저의 경우 지금은 아이디 비밀번호 체크라고 나오는데 이부분에 대한 안내메시지 출력하도록 하는 분기처리가 필요.
+     * 로그인 토큰 구현 후, 로그인 성공시 토큰 발급 추가 필요 -> feature/token
+     * 그리고 탈퇴한 유저의 경우 지금은 아이디 비밀번호 체크라고 나오는데 이부분에 대한 안내메시지 출력하도록 하는 분기처리가 필요.
      * select 결과로 받은 user 객체에서 accessid를 포함해서 access_token 발급 예정
      */
     @PostMapping("/login")

@@ -18,11 +18,11 @@ public class UserServiceImpl implements UserService {
     }
 
     public User login(UserRequest userRequest){
-        return userMapper.findByLoginIdAndPw(userRequest);
+        return userMapper.loginIdAndPw(userRequest);
     }
 
-    public boolean checkLoginID(String user_id){
-        return userMapper.checkLoginId(user_id);
+    public boolean checkLoginID(String userId){
+        return userMapper.checkLoginId(userId);
     }
 
 
@@ -37,11 +37,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void userDelete(String user_id){
-        userMapper.userDelete(user_id);
+    public void userDelete(String userId){
+        userMapper.userDelete(userId);
     }
 
-    public User getUserDetail(String user_id){
-        return userMapper.getUserDetail(user_id);
+    public User getUserDetail(String userId){
+        return userMapper.getUserDetail(userId);
     }
 }

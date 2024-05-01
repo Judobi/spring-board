@@ -5,14 +5,14 @@ import com.example.springboard.vo.User;
 
 public interface UserService {
     User login(UserRequest userRequest);
-    boolean checkLoginID(String user_id);
+    boolean checkLoginID(String userId);
 
     void signUp(UserRequest userRequest);
 
     void userUpdate(UserRequest userRequest);
 
-    void userDelete(String user_id);
+    void userDelete(String userId);
 
-    User getUserDetail(String user_id);
+    User getUserDetail(String userId);
 
 }
