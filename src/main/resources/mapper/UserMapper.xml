@@ -4,10 +4,10 @@
 
 <mapper namespace="com.example.springboard.mapper.UserMapper">
     <!--로그인 -->
-    <select id="loginIdAndPw" resultType="com.example.springboard.vo.User">
-        select uid, user_id, nickname, time_created, access_id
+    <select id="findIdAndPw" resultType="com.example.springboard.vo.User">
+        select *
         from user
-        where user_id=#{userId} and password=#{password} and time_deleted IS NULL
+        where user_id=#{userId} and password=#{password}
     </select>
 
     <!--아이디 중복체크 -->
@@ -36,7 +36,7 @@
     <!-- 회원정보 수정(비밀번호 수정) -->
     <update id="userUpdate">
         update user
-        set password = #{password},
+        set password = #{newPassword},
             nickname = #{nickname}
         where user_id = #{userId}
     </update>
@@ -46,7 +46,7 @@
         update user
         set time_deleted = now(),
             access_id = 0
-        where user_id = #{user_id}
+        where user_id = #{userId}
     </update>
 
     <select id="getUserDetail" resultType="com.example.springboard.vo.User">

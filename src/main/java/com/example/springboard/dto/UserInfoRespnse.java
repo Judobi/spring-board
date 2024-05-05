@@ -4,12 +4,12 @@ import com.example.springboard.vo.User;
 
 import java.time.LocalDateTime;
 
-public class UserInfoDto {
+public class UserInfoRespnse {
     private String id;
     private String nickname;
     private LocalDateTime createTime;
 
-    public UserInfoDto(User user) {
+    public UserInfoRespnse(User user) {
         this.id = user.getUserId();
         this.nickname = user.getNickname();
         this.createTime = user.getTimeCreated();

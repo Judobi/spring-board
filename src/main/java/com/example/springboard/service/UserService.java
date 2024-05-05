@@ -1,17 +1,19 @@
 package com.example.springboard.service;
 
 import com.example.springboard.dto.UserRequest;
+import com.example.springboard.dto.UserSignupRequest;
+import com.example.springboard.dto.UserUpdateRequest;
 import com.example.springboard.vo.User;
 
 public interface UserService {
     User login(UserRequest userRequest);
-    boolean checkLoginID(String userId);
+    void checkLoginID(String userId);
 
-    void signUp(UserRequest userRequest);
+    void signUp(UserSignupRequest userRequest);
 
-    void userUpdate(UserRequest userRequest);
+    void userUpdate(UserUpdateRequest userRequest);
 
-    void userDelete(String userId);
+    void userDelete(UserRequest userRequest);
 
     User getUserDetail(String userId);
 
