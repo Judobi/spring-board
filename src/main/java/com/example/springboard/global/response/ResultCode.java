@@ -5,7 +5,13 @@ import org.springframework.http.HttpStatus;
 public enum ResultCode {
     //user
     LOGIN_SUCCESS(HttpStatus.OK, "U001", "로그인 되었습니다."),
-    ID_USING_AVAIABLE(HttpStatus.OK, "U002", "사용가능한 아이디입니다.");
+    ID_USING_AVAIABLE(HttpStatus.OK, "U002", "사용가능한 아이디입니다."),
+    SIGNUP_SUCCESS(HttpStatus.CREATED, "U003", "회원가입이 완료되었습니다."),
+    SEARCH_MYINFO_SUCCESS(HttpStatus.OK, "U004", "회원정보 조회 성공"),
+    CHANGE_PW_SUCCESS(HttpStatus.OK, "U005", "비밀번호 변경 성공"),
+    DELETE_USER_SUCCESS(HttpStatus.OK, "U006", "회원탈퇴가 완료되었습니다"),
+    LOGOUT_SUCCESS(HttpStatus.OK, "U007", "로그아웃 되었습니다");
+
 
     private HttpStatus status;
     private String code;

@@ -8,7 +8,10 @@ public enum ErrorCode {
     //Auth
 
     //User
-    USER_ID_ALREADY_EXIST("U001", HttpStatus.CONFLICT, "해당 아이디가 이미 존재합니다");
+    USER_ID_ALREADY_EXIST("U001", HttpStatus.CONFLICT, "해당 아이디가 이미 존재합니다"),
+    USER_LOGIN_FAIL("U002", HttpStatus.BAD_REQUEST, "아이디 또는 비밀번호가 틀렸습니다."),
+    USER_STATUS_DELETED("U003", HttpStatus.BAD_REQUEST, "탈퇴한 회원입니다."),
+    USER_PW_FAIL("U004", HttpStatus.BAD_REQUEST, "비밀번호가 틀립니다.");
 
     //Board
 

@@ -19,8 +19,6 @@ public class CustomExceptionHandler{
     public ResponseEntity<ErrorResponse> handleBindingException(BindException ex){
         log.error("binding error: ", ex);
         final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE, ex.getBindingResult());
-        System.out.println("여기까지옴");
-        System.out.println(response + "\n ㅐㅐ");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
