@@ -6,6 +6,7 @@ import com.example.springboard.global.auth.Token;
 import com.example.springboard.global.auth.TokenProvider;
 import com.example.springboard.global.error.ErrorCode;
 import com.example.springboard.global.error.exception.ApiException;
+import com.example.springboard.mapper.TokenMapper;
 import com.example.springboard.service.UserService;
 import com.example.springboard.vo.User;
 import com.example.springboard.dto.UserRequest;
@@ -21,11 +22,13 @@ public class UserServiceImpl implements UserService {
     private final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserMapper userMapper;
+    private final TokenMapper tokenMapper;
     private final TokenProvider tokenProvider;
 
     @Autowired
-    public UserServiceImpl(UserMapper userMapper, TokenProvider tokenProvider) {
+    public UserServiceImpl(UserMapper userMapper, TokenMapper tokenMapper, TokenProvider tokenProvider) {
         this.userMapper = userMapper;
+        this.tokenMapper = tokenMapper;
         this.tokenProvider = tokenProvider;
     }
 
@@ -38,7 +41,15 @@ public class UserServiceImpl implements UserService {
         }
 
         Token token = tokenProvider.createToken(user.getUid(), user.getNickname(), user.getAccessId());
+        tokenMapper.saveRefreshToken(user.getUid(), token.getRefreshToken());
         return token;
+    }
+
+    public void logout(String accessToken, String refreshToken) {
+        if (accessToken == null || refreshToken == null){
+            throw new ApiException(ErrorCode.TOKEN_INVALID_ERROR);
+        }
+        tokenMapper.deleteRefreshToken(refreshToken);
     }
 
     public void checkLoginID(String userId){

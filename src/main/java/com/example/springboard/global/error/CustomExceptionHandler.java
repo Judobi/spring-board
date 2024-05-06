@@ -38,5 +38,4 @@ public class CustomExceptionHandler{
         final ErrorResponse response = ErrorResponse.of(ErrorCode.TOKEN_INVALID_ERROR);
         return new ResponseEntity<>(response, response.getStatus());
     }
-
 }

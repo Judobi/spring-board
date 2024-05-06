@@ -4,6 +4,7 @@ import com.example.springboard.dto.UserInfoRespnse;
 import com.example.springboard.dto.UserSignupRequest;
 import com.example.springboard.dto.UserUpdateRequest;
 import com.example.springboard.global.auth.Token;
+import com.example.springboard.global.auth.TokenProvider;
 import com.example.springboard.global.response.ResultCode;
 import com.example.springboard.global.response.ResultResponse;
 import com.example.springboard.service.UserService;
@@ -45,14 +46,13 @@ public class UserController {
 
     /**
      * 로그아웃
-     * @param userRequest userid
      */
     @PostMapping("/logout")
-    public ResponseEntity<ResultResponse> logout(@RequestBody UserRequest userRequest){
-        //토큰 구현시 토큰제거 로직 추가 예정
+    public ResponseEntity<ResultResponse> logout(@RequestHeader(value = TokenProvider.ACCESS_PREFIX_STRING, required = false) String accessToken,
+                                                 @RequestHeader(value = TokenProvider.REFRESH_HEADER_STRING, required = false) String refreshToken){
+        userService.logout(accessToken,refreshToken);
         ResultResponse response = ResultResponse.of(ResultCode.LOGOUT_SUCCESS);
         return new ResponseEntity<>(response, response.getStatus());
-
     }
 
     /**

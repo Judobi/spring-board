@@ -18,4 +18,6 @@ public interface UserService {
 
     User getUserDetail(String userId);
 
+    void logout(String accessToken, String refreshToken);
+
 }

@@ -67,28 +67,23 @@ public class TokenProvider {
      */
     private String createRefreshToken(int uid){
         Date expiration = new Date(System.currentTimeMillis() + REFRESHTOKEN_TIME);
-
-        String refreshToken = Jwts.builder()
+        return Jwts.builder()
                 .subject(Long.toString(uid))
                 .claim("uid", uid)
                 .expiration(expiration)
                 .signWith(getSecretKey())
                 .compact();
-
-        // todo - refreshtoken db저장
-
-        return refreshToken;
     }
 
     public Jws<Claims> getClaims(String token){
-        Jws<Claims> claims = null;
+        Jws<Claims> claims;
         try {
             claims = Jwts.parser()
                     .verifyWith(getSecretKey())
                     .build()
                     .parseSignedClaims(token);
         } catch (ExpiredJwtException ex){
-            // 만료 예외 -> exception handler 추가
+            return null;
         }
         return claims;
     }

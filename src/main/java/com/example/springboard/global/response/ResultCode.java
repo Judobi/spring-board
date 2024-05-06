@@ -3,6 +3,9 @@ package com.example.springboard.global.response;
 import org.springframework.http.HttpStatus;
 
 public enum ResultCode {
+    //auth
+    TOKEN_REISSUE_SUCCESS(HttpStatus.CREATED, "A001", "토큰 갱신을 성공했습니다."),
+
     //user
     LOGIN_SUCCESS(HttpStatus.OK, "U001", "로그인 되었습니다."),
     ID_USING_AVAIABLE(HttpStatus.OK, "U002", "사용가능한 아이디입니다."),

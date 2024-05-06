@@ -12,7 +12,7 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
     <mappers>
-        <mapper resource="mapper/TestMapper.xml"/>
         <mapper resource="mapper/UserMapper.xml"/>
+        <mapper resource="mapper/TokenMapper.xml"/>
     </mappers>
 </configuration>
