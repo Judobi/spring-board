@@ -3,6 +3,7 @@ package com.example.springboard.controller;
 import com.example.springboard.dto.UserInfoRespnse;
 import com.example.springboard.dto.UserSignupRequest;
 import com.example.springboard.dto.UserUpdateRequest;
+import com.example.springboard.global.auth.Token;
 import com.example.springboard.global.response.ResultCode;
 import com.example.springboard.global.response.ResultResponse;
 import com.example.springboard.service.UserService;
@@ -37,8 +38,8 @@ public class UserController {
      */
     @PostMapping("/login")
     public ResponseEntity<ResultResponse> login(@Valid @RequestBody UserRequest userRequest){
-        userService.login(userRequest);
-        ResultResponse response = ResultResponse.of(ResultCode.LOGIN_SUCCESS, "");
+        Token token = userService.login(userRequest);
+        ResultResponse response = ResultResponse.of(ResultCode.LOGIN_SUCCESS, token);
         return new ResponseEntity<>(response, response.getStatus());
     }
 

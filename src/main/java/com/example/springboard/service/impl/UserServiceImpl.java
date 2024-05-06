@@ -2,26 +2,34 @@ package com.example.springboard.service.impl;
 
 import com.example.springboard.dto.UserSignupRequest;
 import com.example.springboard.dto.UserUpdateRequest;
+import com.example.springboard.global.auth.Token;
+import com.example.springboard.global.auth.TokenProvider;
 import com.example.springboard.global.error.ErrorCode;
 import com.example.springboard.global.error.exception.ApiException;
 import com.example.springboard.service.UserService;
 import com.example.springboard.vo.User;
 import com.example.springboard.dto.UserRequest;
 import com.example.springboard.mapper.UserMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+
     private final UserMapper userMapper;
+    private final TokenProvider tokenProvider;
 
     @Autowired
-    public UserServiceImpl(UserMapper userMapper) {
+    public UserServiceImpl(UserMapper userMapper, TokenProvider tokenProvider) {
         this.userMapper = userMapper;
+        this.tokenProvider = tokenProvider;
     }
 
-    public User login(UserRequest userRequest){
+    public Token login(UserRequest userRequest){
         User user = userMapper.findIdAndPw(userRequest);
         if(user == null){
             throw new ApiException(ErrorCode.USER_LOGIN_FAIL);
@@ -29,7 +37,8 @@ public class UserServiceImpl implements UserService {
             throw new ApiException(ErrorCode.USER_STATUS_DELETED);
         }
 
-        return user;
+        Token token = tokenProvider.createToken(user.getUid(), user.getNickname(), user.getAccessId());
+        return token;
     }
 
     public void checkLoginID(String userId){

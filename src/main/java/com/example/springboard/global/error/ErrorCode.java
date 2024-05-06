@@ -6,6 +6,8 @@ public enum ErrorCode {
     //Common
     INVALID_INPUT_VALUE("C001", HttpStatus.BAD_REQUEST, "invalid input type"),
     //Auth
+    TOKEN_INVALID_ERROR("A001", HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰입니다."),
+    TOKEN_EXPIRED_ERROR("A002", HttpStatus.UNAUTHORIZED, "만료된 토큰입니다."),
 
     //User
     USER_ID_ALREADY_EXIST("U001", HttpStatus.CONFLICT, "해당 아이디가 이미 존재합니다"),

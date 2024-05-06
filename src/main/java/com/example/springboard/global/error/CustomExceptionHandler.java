@@ -1,14 +1,13 @@
 package com.example.springboard.global.error;
 
 import com.example.springboard.global.error.exception.ApiException;
+import io.jsonwebtoken.JwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
 public class CustomExceptionHandler{
@@ -19,7 +18,7 @@ public class CustomExceptionHandler{
     public ResponseEntity<ErrorResponse> handleBindingException(BindException ex){
         log.error("binding error: ", ex);
         final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE, ex.getBindingResult());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, response.getStatus());
     }
 
 
@@ -29,7 +28,15 @@ public class CustomExceptionHandler{
         log.error("ApiException: ", ex);
         final ErrorCode errorCode = ex.getErrorCode();
         final ErrorResponse response = ErrorResponse.of(errorCode, ex.getErrors());
-        return new ResponseEntity<>(response, errorCode.getStatus());
+        return new ResponseEntity<>(response, response.getStatus());
+    }
+
+    // jwt 잘못된 토큰일 경우 발생
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<ErrorResponse> handleJwtException(JwtException ex){
+        log.error("JwtException: ", ex);
+        final ErrorResponse response = ErrorResponse.of(ErrorCode.TOKEN_INVALID_ERROR);
+        return new ResponseEntity<>(response, response.getStatus());
     }
 
 }
