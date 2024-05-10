@@ -1,4 +1,6 @@
 package com.example.springboard.global.auth;
+import com.example.springboard.global.error.ErrorCode;
+import com.example.springboard.global.error.exception.ApiException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -88,6 +90,17 @@ public class TokenProvider {
         return claims;
     }
 
+    public boolean checkAccessToken(String token){
+        try {
+            Jwts.parser()
+                    .verifyWith(getSecretKey())
+                    .build()
+                    .parseSignedClaims(token);
+            return true;
+        } catch (ExpiredJwtException ex){
+            throw new ApiException(ErrorCode.TOKEN_EXPIRED_ERROR);
+        }
+    }
 
 
     public static SecretKey getSecretKey() {

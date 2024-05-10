@@ -13,8 +13,10 @@ public enum ResultCode {
     SEARCH_MYINFO_SUCCESS(HttpStatus.OK, "U004", "회원정보 조회 성공"),
     CHANGE_PW_SUCCESS(HttpStatus.OK, "U005", "비밀번호 변경 성공"),
     DELETE_USER_SUCCESS(HttpStatus.OK, "U006", "회원탈퇴가 완료되었습니다"),
-    LOGOUT_SUCCESS(HttpStatus.OK, "U007", "로그아웃 되었습니다");
+    LOGOUT_SUCCESS(HttpStatus.OK, "U007", "로그아웃 되었습니다"),
 
+    //boaard
+    GET_POSTLIST_SUCCESS(HttpStatus.OK, "B001", "게시물 목록을 불러오는데 성공했습니다.");
 
     private HttpStatus status;
     private String code;
