@@ -19,9 +19,10 @@ public enum ErrorCode {
     //Board
     BOARD_AUTH_USER_FAIL("B001", HttpStatus.UNAUTHORIZED, "이 게시판은 회원 게시판입니다. 로그인해 주세요."),
     BOARD_AUTH_NONUSER_FAIL("B002", HttpStatus.FORBIDDEN, "이 게시판은 회원은 이용할 수 없는 비회원 게시판입니다. 로그아웃 해주세요."),
-    BOARD_AUTH_FORBIDDEN("B003", HttpStatus.FORBIDDEN, "접근할 수 없는 게시판입니다.");
+    BOARD_AUTH_FORBIDDEN("B003", HttpStatus.FORBIDDEN, "접근할 수 없는 게시판입니다."),
 
     //Post
+    POST_GET_FAIL("P001", HttpStatus.NOT_FOUND, "요청한 게시글을 찾을 수 없습니다");
 
     //Comment
 

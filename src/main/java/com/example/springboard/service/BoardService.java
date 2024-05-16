@@ -1,24 +1,24 @@
 package com.example.springboard.service;
 
+import com.example.springboard.dto.PostInsertResponse;
 import com.example.springboard.dto.PostListRequest;
-import com.example.springboard.dto.PostListResponse;
+import com.example.springboard.dto.PostResponse;
 import com.example.springboard.vo.Post;
 
 import java.util.List;
 
 public interface BoardService {
 
-    void checkAuth(String accessToken, int boardId);
+    Integer checkAuth(String accessToken, int boardId);
 
-    List<PostListResponse> getPostList(PostListRequest request);
+    List<PostResponse> getPostList(PostListRequest request);
 
-    /*
-    void insertPost();
+    PostInsertResponse insertPost(Post post);
 
-    Post getPostDetail();
+    PostResponse getPostDetail(int boardId, int postNo);
 
-    void updatePost();
-
+    void updatePost(Post post);
+/*
     void deletePost();
 
     boolean checkPw();

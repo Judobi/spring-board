@@ -1,8 +1,10 @@
 package com.example.springboard.dto;
 
+import com.example.springboard.vo.Post;
+
 import java.time.LocalDateTime;
 
-public class PostListResponse {
+public class PostResponse {
     public int postNo;
     public int boardNo;
     public String nickname;
@@ -14,6 +16,20 @@ public class PostListResponse {
     public String guestId;
     public LocalDateTime timeCreated;
     public LocalDateTime timeModified;
+
+    public PostResponse(){}
+
+    public PostResponse(Post post) {
+        this.postNo = post.getPostNo();
+        this.boardNo = post.getBoardNo();
+        this.nickname = post.getNickname();
+        this.title = post.getTitle();
+        this.views = post.getViews() + 1; //게시글 조회 후, DB에 조회수를 증가를 업데이트 하기 때문에 +1
+        this.commentsCount = post.getCommentsCount();
+        this.guestId = post.getGuestId();
+        this.timeCreated = post.getTimeCreated();
+        this.timeModified = post.getTimeModified();
+    }
 
     public int getPostNo() {
         return postNo;

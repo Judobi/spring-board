@@ -16,7 +16,11 @@ public enum ResultCode {
     LOGOUT_SUCCESS(HttpStatus.OK, "U007", "로그아웃 되었습니다"),
 
     //boaard
-    GET_POSTLIST_SUCCESS(HttpStatus.OK, "B001", "게시물 목록을 불러오는데 성공했습니다.");
+    GET_POSTLIST_SUCCESS(HttpStatus.OK, "B001", "게시글 목록을 불러오는데 성공했습니다."),
+    GET_POST_SUUCCESS(HttpStatus.OK, "B002", "게시글을 불러오는데 성공했습니다."),
+    INSERT_POST_SUCCESS(HttpStatus.CREATED, "B003", "게시글 등록을 성공했습니다."),
+    UPDATE_POST_SUCCESS(HttpStatus.OK, "B004", "게시글 수정을 성공했습니다."),
+    DELETE_POST_SUCCESS(HttpStatus.OK, "B005", "게시글 삭제를 성공했습니다");
 
     private HttpStatus status;
     private String code;
