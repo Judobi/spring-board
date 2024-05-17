@@ -1,6 +1,11 @@
 package com.example.springboard.controller;
 
-import com.example.springboard.dto.*;
+import com.example.springboard.dto.request.PostDeleteRequest;
+import com.example.springboard.dto.request.PostListRequest;
+import com.example.springboard.dto.request.PostPwCheckRequest;
+import com.example.springboard.dto.request.PostRequest;
+import com.example.springboard.dto.response.PostInsertResponse;
+import com.example.springboard.dto.response.PostResponse;
 import com.example.springboard.global.auth.TokenProvider;
 import com.example.springboard.global.response.ResultCode;
 import com.example.springboard.global.response.ResultResponse;

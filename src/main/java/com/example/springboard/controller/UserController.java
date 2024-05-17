@@ -1,14 +1,14 @@
 package com.example.springboard.controller;
 
-import com.example.springboard.dto.UserInfoRespnse;
-import com.example.springboard.dto.UserSignupRequest;
-import com.example.springboard.dto.UserUpdateRequest;
+import com.example.springboard.dto.response.UserInfoRespnse;
+import com.example.springboard.dto.request.UserSignupRequest;
+import com.example.springboard.dto.request.UserUpdateRequest;
 import com.example.springboard.global.auth.Token;
 import com.example.springboard.global.auth.TokenProvider;
 import com.example.springboard.global.response.ResultCode;
 import com.example.springboard.global.response.ResultResponse;
 import com.example.springboard.service.UserService;
-import com.example.springboard.dto.UserRequest;
+import com.example.springboard.dto.request.UserRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
