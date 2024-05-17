@@ -1,4 +1,4 @@
-package com.example.springboard.dto;
+package com.example.springboard.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

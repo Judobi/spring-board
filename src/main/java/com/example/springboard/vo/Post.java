@@ -1,6 +1,6 @@
 package com.example.springboard.vo;
 
-import com.example.springboard.dto.PostRequest;
+import com.example.springboard.dto.request.PostRequest;
 
 import java.time.LocalDateTime;
 

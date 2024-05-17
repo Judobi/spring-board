@@ -1,7 +1,7 @@
 package com.example.springboard.mapper;
 
-import com.example.springboard.dto.PostListRequest;
-import com.example.springboard.dto.PostResponse;
+import com.example.springboard.dto.request.PostListRequest;
+import com.example.springboard.dto.response.PostResponse;
 import com.example.springboard.vo.Post;
 import org.apache.ibatis.annotations.Mapper;
 

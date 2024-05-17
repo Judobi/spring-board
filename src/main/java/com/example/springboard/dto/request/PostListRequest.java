@@ -1,4 +1,4 @@
-package com.example.springboard.dto;
+package com.example.springboard.dto.request;
 
 public class PostListRequest {
     public int boardId;

@@ -1,4 +1,4 @@
-package com.example.springboard.dto;
+package com.example.springboard.dto.response;
 
 import com.example.springboard.vo.Post;
 import jakarta.validation.constraints.NotBlank;

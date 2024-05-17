@@ -1,7 +1,7 @@
 package com.example.springboard.service.impl;
 
-import com.example.springboard.dto.UserSignupRequest;
-import com.example.springboard.dto.UserUpdateRequest;
+import com.example.springboard.dto.request.UserSignupRequest;
+import com.example.springboard.dto.request.UserUpdateRequest;
 import com.example.springboard.global.auth.Token;
 import com.example.springboard.global.auth.TokenProvider;
 import com.example.springboard.global.error.ErrorCode;
@@ -9,7 +9,7 @@ import com.example.springboard.global.error.exception.ApiException;
 import com.example.springboard.mapper.TokenMapper;
 import com.example.springboard.service.UserService;
 import com.example.springboard.vo.User;
-import com.example.springboard.dto.UserRequest;
+import com.example.springboard.dto.request.UserRequest;
 import com.example.springboard.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
