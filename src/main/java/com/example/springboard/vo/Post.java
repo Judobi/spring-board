@@ -5,21 +5,21 @@ import com.example.springboard.dto.PostRequest;
 import java.time.LocalDateTime;
 
 public class Post {
-    public int postNo;
-    public int boardNo;
-    public int uid;
-    public String nickname;
+    private int postNo;
+    private int boardNo;
+    private int uid;
+    private String nickname;
 
-    public String title;
-    public String content;
-    public int views;
-    public int commentsCount;
+    private String title;
+    private String content;
+    private int views;
+    private int commentsCount;
 
-    public String guestId;
-    public String guestPw;
-    public LocalDateTime timeCreated;
-    public LocalDateTime timeModified;
-    public LocalDateTime timeDeleted;
+    private String guestId;
+    private String guestPw;
+    private LocalDateTime timeCreated;
+    private LocalDateTime timeModified;
+    private LocalDateTime timeDeleted;
 
     public Post() {
     }

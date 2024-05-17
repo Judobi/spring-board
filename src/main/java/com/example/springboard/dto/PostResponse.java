@@ -5,17 +5,17 @@ import com.example.springboard.vo.Post;
 import java.time.LocalDateTime;
 
 public class PostResponse {
-    public int postNo;
-    public int boardNo;
-    public String nickname;
+    private int postNo;
+    private int boardNo;
+    private String nickname;
 
-    public String title;
-    public int views;
-    public int commentsCount;
+    private String title;
+    private int views;
+    private int commentsCount;
 
-    public String guestId;
-    public LocalDateTime timeCreated;
-    public LocalDateTime timeModified;
+    private String guestId;
+    private LocalDateTime timeCreated;
+    private LocalDateTime timeModified;
 
     public PostResponse(){}
 

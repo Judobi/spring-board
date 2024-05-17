@@ -5,12 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public class PostInsertResponse {
-    public int postNo;
-    public int boardNo;
-    public int uid;
-    public String title;
-    public String content;
-    public String guestId;
+    private int postNo;
+    private int boardNo;
+    private int uid;
+    private String title;
+    private String content;
+    private String guestId;
 
     public PostInsertResponse(){};
     public PostInsertResponse(Post post){

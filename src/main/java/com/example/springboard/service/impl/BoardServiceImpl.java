@@ -102,7 +102,7 @@ public class BoardServiceImpl implements BoardService {
 
     public void checkPw(PostPwCheckRequest request) {
         log.info(request.toString());
-        if(!boardMapper.checkGuestPw(request.postNo, request.getGuestPw())){
+        if(!boardMapper.checkGuestPw(request.getPostNo(), request.getGuestPw())){
             throw new ApiException(ErrorCode.POST_PWCHECK_FAIL);
         }
     }
@@ -124,7 +124,7 @@ public class BoardServiceImpl implements BoardService {
         }
 
         // uid가 0이 아니면 회원이 작성한 게시글, uid가 미일치하면 다른사람이 작성한 게시글을 수정하려고 접근한 것.
-        if((post.getUid() != 0) && (post.uid != uid)){
+        if((post.getUid() != 0) && (post.getUid() != uid)){
             throw new ApiException(ErrorCode.POST_CHANGE_AUTH_FAIL);
         } else if ((post.getGuestPw() != null) && (!post.getGuestPw().equals(guestPw))) { //guestPw가 null이 아니면 비회원 게시글, 비밀번호 일치여부 확인
             throw new ApiException(ErrorCode.POST_PWCHECK_FAIL);

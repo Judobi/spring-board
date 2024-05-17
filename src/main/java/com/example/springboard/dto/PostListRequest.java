@@ -1,10 +1,10 @@
 package com.example.springboard.dto;
 
 public class PostListRequest {
-    public int boardId;
-    public int page;
-    public int limit;
-    public int startPostNo;
+    private int boardId;
+    private int page;
+    private int limit;
+    private int startPostNo;
 
     public PostListRequest(int boardId) {
         this.boardId = boardId;
