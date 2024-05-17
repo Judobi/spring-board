@@ -20,7 +20,8 @@ public enum ResultCode {
     GET_POST_SUUCCESS(HttpStatus.OK, "B002", "게시글을 불러오는데 성공했습니다."),
     INSERT_POST_SUCCESS(HttpStatus.CREATED, "B003", "게시글 등록을 성공했습니다."),
     UPDATE_POST_SUCCESS(HttpStatus.OK, "B004", "게시글 수정을 성공했습니다."),
-    DELETE_POST_SUCCESS(HttpStatus.OK, "B005", "게시글 삭제를 성공했습니다");
+    DELETE_POST_SUCCESS(HttpStatus.OK, "B005", "게시글 삭제를 성공했습니다"),
+    CHECK_POSTPW_SUCCESS(HttpStatus.OK, "B006", "게시글 비밀번호가 일치합니다");
 
     private HttpStatus status;
     private String code;

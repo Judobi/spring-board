@@ -73,4 +73,16 @@
         set views = views +1
         where post_no = #{postNo}
     </update>
+
+    <!--게시글 삭제 -->
+    <update id="deletePost">
+        update post
+        set time_deleted = now()
+        where board_no = #{boardId} and post_no = #{postNo}
+    </update>
+
+    <!--게시글 비밀번호 일치여부 확인 -->
+    <select id="checkGuestPw" resultType="boolean">
+        select exists(select * from post where post_no = #{postNo} and guest_pw = #{guestPw})
+    </select>
 </mapper>

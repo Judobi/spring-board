@@ -20,4 +20,8 @@ public interface BoardMapper {
     void updatePost(Post post);
 
     void updateViews(int postNo);
+
+    void deletePost(int boardId, int postNo);
+
+    boolean checkGuestPw(int postNo, String guestPw);
 }

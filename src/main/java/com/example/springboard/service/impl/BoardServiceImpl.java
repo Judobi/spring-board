@@ -1,8 +1,6 @@
 package com.example.springboard.service.impl;
 
-import com.example.springboard.dto.PostInsertResponse;
-import com.example.springboard.dto.PostListRequest;
-import com.example.springboard.dto.PostResponse;
+import com.example.springboard.dto.*;
 import com.example.springboard.global.auth.AccessType;
 import com.example.springboard.global.auth.TokenProvider;
 import com.example.springboard.global.error.ErrorCode;
@@ -85,6 +83,18 @@ public class BoardServiceImpl implements BoardService {
         boardMapper.updatePost(post);
     }
 
+    public void deletePost(PostDeleteRequest request) {
+        log.info("deletePost : {}", request);
+        // 삭제 권한 있는지 확인
+        checkPostAuth();
+        boardMapper.deletePost(request.getBoardNo(), request.getPostNo());
+    }
+
+    public void checkPw(PostPwCheckRequest request) {
+        if(!boardMapper.checkGuestPw(request.postNo, request.getGuestPw())){
+            throw new ApiException(ErrorCode.POST_PWCHECK_FAIL);
+        }
+    }
 
     // 게시글 수정 또는 삭제시 게시글 작성자 권한 확인
     public void checkPostAuth(){

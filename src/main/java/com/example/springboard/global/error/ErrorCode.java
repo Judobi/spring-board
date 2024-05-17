@@ -22,7 +22,8 @@ public enum ErrorCode {
     BOARD_AUTH_FORBIDDEN("B003", HttpStatus.FORBIDDEN, "접근할 수 없는 게시판입니다."),
 
     //Post
-    POST_GET_FAIL("P001", HttpStatus.NOT_FOUND, "요청한 게시글을 찾을 수 없습니다");
+    POST_GET_FAIL("P001", HttpStatus.NOT_FOUND, "요청한 게시글을 찾을 수 없습니다"),
+    POST_PWCHECK_FAIL("P002", HttpStatus.BAD_REQUEST, "비밀번호가 틀립니다.");
 
     //Comment
 

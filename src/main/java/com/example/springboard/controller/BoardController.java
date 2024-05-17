@@ -1,9 +1,6 @@
 package com.example.springboard.controller;
 
-import com.example.springboard.dto.PostInsertResponse;
-import com.example.springboard.dto.PostListRequest;
-import com.example.springboard.dto.PostRequest;
-import com.example.springboard.dto.PostResponse;
+import com.example.springboard.dto.*;
 import com.example.springboard.global.auth.TokenProvider;
 import com.example.springboard.global.response.ResultCode;
 import com.example.springboard.global.response.ResultResponse;
@@ -101,18 +98,21 @@ public class BoardController {
 
     @DeleteMapping("/boards/{board-id}/posts/{post-no}")
     public ResponseEntity<ResultResponse> deletePost(@PathVariable(value = "board-id") int boardId,
-                                                     @RequestHeader(value = TokenProvider.ACCESS_HEADER_STRING, required = false) String accessToken){
-        boardService.checkAuth(accessToken, boardId);
+                                                     @RequestHeader(value = TokenProvider.ACCESS_HEADER_STRING, required = false) String accessToken,
+                                                     @Valid @RequestBody PostDeleteRequest request){
+        Integer uid = boardService.checkAuth(accessToken, boardId);
+        boardService.deletePost(request);
         ResultResponse response = ResultResponse.of(ResultCode.DELETE_POST_SUCCESS);
         return new ResponseEntity<>(response, response.getStatus());
     }
 
-    /*
-    @PostMapping("/boards/{board-id}/posts/{post-no}/check-pw")
-    public ResponseEntity<ResultResponse> checkPW(){
 
-        return
-    }*/
+    @PostMapping("/boards/{board-id}/posts/{post-no}/check-pw")
+    public ResponseEntity<ResultResponse> checkPW(@Valid @RequestBody PostPwCheckRequest request){
+        boardService.checkPw(request);
+        ResultResponse response = ResultResponse.of(ResultCode.CHECK_POSTPW_SUCCESS);
+        return new ResponseEntity<>(response, response.getStatus());
+    }
 
 
 
