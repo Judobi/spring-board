@@ -53,8 +53,16 @@
 
     <!-- 게시글 상세조회 -->
     <select id="getPost" resultType="com.example.springboard.vo.Post">
-        select a.*, b.nickname from post as a
+        select a.*, b.nickname, c.comments_count
+        from post as a
         left join user as b on b.uid = a.uid
+        left join(
+            select count(*) as comments_count, post_no
+            from comment
+            where time_deleted is null
+            group by post_no
+            ) as c
+            on a.post_no = c.post_no
         where a.board_no = #{boardId} and a.post_no = #{postNo}
     </select>
 
