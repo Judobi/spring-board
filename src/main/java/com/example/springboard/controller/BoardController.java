@@ -96,25 +96,32 @@ public class BoardController {
     }
 
 
+    /**
+     * 게시글 삭제 요청.
+     * @param boardId 게시판 번호
+     * @param accessToken 로그인 토큰
+     * @param request 삭제할 게시글 번호, 패스워드(비회원 게시글)
+     */
     @DeleteMapping("/boards/{board-id}/posts/{post-no}")
     public ResponseEntity<ResultResponse> deletePost(@PathVariable(value = "board-id") int boardId,
                                                      @RequestHeader(value = TokenProvider.ACCESS_HEADER_STRING, required = false) String accessToken,
                                                      @Valid @RequestBody PostDeleteRequest request){
         Integer uid = boardService.checkAuth(accessToken, boardId);
+        request.setUid(uid);
         boardService.deletePost(request);
         ResultResponse response = ResultResponse.of(ResultCode.DELETE_POST_SUCCESS);
         return new ResponseEntity<>(response, response.getStatus());
     }
 
 
+    /**
+     * 게시글 비밀번호 확인 (비회원 게시글)
+     * @param request 게시글 비밀번호
+     */
     @PostMapping("/boards/{board-id}/posts/{post-no}/check-pw")
     public ResponseEntity<ResultResponse> checkPW(@Valid @RequestBody PostPwCheckRequest request){
         boardService.checkPw(request);
         ResultResponse response = ResultResponse.of(ResultCode.CHECK_POSTPW_SUCCESS);
         return new ResponseEntity<>(response, response.getStatus());
     }
-
-
-
-
 }

@@ -26,7 +26,9 @@ public class Post {
 
     // 게시글 작성시 사용하는 생성자
     public Post(Integer uid, int boardId, PostRequest request){
-        this.uid = uid;
+        if(uid != null) {
+            this.uid = uid;
+        }
         this.boardNo = boardId;
         this.title = request.getTitle();
         this.content = request.getContent();
@@ -36,7 +38,9 @@ public class Post {
 
     //게시글 수정시 사용하는 생성자
     public Post(Integer uid, int boardId, int postNo, PostRequest request){
-        this.uid = uid;
+        if(uid != null) {
+            this.uid = uid;
+        }
         this.boardNo = boardId;
         this.postNo = postNo;
         this.title = request.getTitle();

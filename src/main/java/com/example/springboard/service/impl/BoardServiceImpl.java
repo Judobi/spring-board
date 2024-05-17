@@ -70,34 +70,64 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     public PostResponse getPostDetail(int boardId, int postNo) {
         Post post = boardMapper.getPost(boardId, postNo);
-        if(post == null){
+
+        // post가 null인 경우 잘못된 게시글 번호 요청, 삭제한 게시글 요청
+        if(post == null || post.getTimeDeleted() != null){
             throw new ApiException(ErrorCode.POST_GET_FAIL);
         }
+
         boardMapper.updateViews(postNo); // 조회수 +1 업데이트
         return new PostResponse(post);
     }
 
     @Transactional
-    public void updatePost(Post post) {
-        log.info(post.toString());
-        boardMapper.updatePost(post);
+    public void updatePost(Post request) {
+        log.info(request.toString());
+
+        //게시글 수정 권한 확인
+        checkPostAuth(request.getBoardNo(), request.getPostNo(), request.getUid(), request.getGuestPw());
+
+        boardMapper.updatePost(request);
     }
 
+    @Transactional
     public void deletePost(PostDeleteRequest request) {
         log.info("deletePost : {}", request);
-        // 삭제 권한 있는지 확인
-        checkPostAuth();
+
+        //게시글 수정 권한 확인
+        checkPostAuth(request.getBoardNo(), request.getPostNo(), request.getUid(), request.getGuestPw());
+
         boardMapper.deletePost(request.getBoardNo(), request.getPostNo());
     }
 
     public void checkPw(PostPwCheckRequest request) {
+        log.info(request.toString());
         if(!boardMapper.checkGuestPw(request.postNo, request.getGuestPw())){
             throw new ApiException(ErrorCode.POST_PWCHECK_FAIL);
         }
     }
 
-    // 게시글 수정 또는 삭제시 게시글 작성자 권한 확인
-    public void checkPostAuth(){
+    // 게시글 수정/삭제시 권한 확인
+    public void checkPostAuth(int boardNo, int postNo, Integer uid, String guestPw){
+        //권한 확인을 위한 게시글 정보 불러오기
+        Post post =  boardMapper.getPost(boardNo, postNo);
+        log.info("수정할 post 정보 : {}", post);
 
+        // post가 null인 경우 잘못된 게시글 번호 요청
+        if(post == null){
+            throw new ApiException(ErrorCode.POST_GET_FAIL);
+        }
+
+        // 삭제된 게시글을 수정하려할 경우
+        if(post.getTimeDeleted() != null){
+            throw new ApiException(ErrorCode.POST_STATUS_DELETE);
+        }
+
+        // uid가 0이 아니면 회원이 작성한 게시글, uid가 미일치하면 다른사람이 작성한 게시글을 수정하려고 접근한 것.
+        if((post.getUid() != 0) && (post.uid != uid)){
+            throw new ApiException(ErrorCode.POST_CHANGE_AUTH_FAIL);
+        } else if ((post.getGuestPw() != null) && (!post.getGuestPw().equals(guestPw))) { //guestPw가 null이 아니면 비회원 게시글, 비밀번호 일치여부 확인
+            throw new ApiException(ErrorCode.POST_PWCHECK_FAIL);
+        }
     }
 }
