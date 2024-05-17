@@ -58,7 +58,7 @@
         left join user as b on b.uid = a.uid
         left join(
             select count(*) as comments_count, post_no
-            from comment
+            from comments
             where time_deleted is null
             group by post_no
             ) as c
