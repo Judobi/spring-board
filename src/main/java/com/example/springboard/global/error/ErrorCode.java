@@ -24,11 +24,12 @@ public enum ErrorCode {
     //Post
     POST_GET_FAIL("P001", HttpStatus.NOT_FOUND, "요청한 게시글을 찾을 수 없습니다"),
     POST_PWCHECK_FAIL("P002", HttpStatus.BAD_REQUEST, "게시글 비밀번호가 일치하지 않습니다."),
-    POST_CHANGE_AUTH_FAIL("P003", HttpStatus.FORBIDDEN, "게시글 작성자와 유저정보가 일치하지 않습니다."),
+    POST_CHANGE_AUTH_FAIL("P003", HttpStatus.FORBIDDEN, "게시글 작성자와 유저 정보가 일치하지 않습니다."),
     POST_STATUS_DELETE("P004", HttpStatus.FORBIDDEN, "삭제된 게시글은 수정/삭제 할 수 없습니다."),
 
     //Comment
-    COMMENT_POST_STATUS_FAIL("C001", HttpStatus.FORBIDDEN, "삭제된 게시글 입니다.");
+    COMMENT_POST_STATUS_FAIL("C001", HttpStatus.FORBIDDEN, "삭제된 게시글 입니다."),
+    COMMENT_INSERT_IDPW_BLANK("C002", HttpStatus.BAD_REQUEST, "비회원 댓글 작성 시, guestId와 guestPw 는 공백일 수 없습니다.");
 
 
     private final String code;

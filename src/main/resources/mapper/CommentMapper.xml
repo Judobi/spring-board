@@ -11,4 +11,23 @@
         order by a.comment_no desc
         limit #{startCommentNo}, #{limit}
     </select>
+
+    <insert id="insertComment" parameterType="com.example.springboard.vo.Comment">
+        insert into comments(
+                             uid,
+                             post_no,
+                             content,
+                             guest_id,
+                             guest_pw
+        ) values (
+                  #{uid},
+                  #{postNo},
+                  #{content},
+                  #{guestId},
+                  #{guestPw}
+                         )
+        <selectKey keyProperty="commentNo" resultType="int" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
 </mapper>
