@@ -1,6 +1,6 @@
 package com.example.springboard.vo;
 
-import com.example.springboard.dto.request.CommentDeleteRequest;
+import com.example.springboard.dto.request.CommentAuthRequest;
 import com.example.springboard.dto.request.CommentRequest;
 
 import java.time.LocalDateTime;
@@ -38,7 +38,7 @@ public class Comment {
     }
 
     // 댓글 삭제 시 사용
-    public Comment(CommentDeleteRequest request){
+    public Comment(CommentAuthRequest request){
         this.postNo = request.getPostNo();
         this.uid = request.getUid();
         this.commentNo = request.getCommentNo();
