@@ -2,7 +2,7 @@ package com.example.springboard.dto.request;
 
 import jakarta.validation.constraints.Pattern;
 
-public class CommentDeleteRequest {
+public class CommentAuthRequest {
     private int commentNo;
     private int postNo;
     private int boardId;

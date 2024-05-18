@@ -1,6 +1,6 @@
 package com.example.springboard.service.impl;
 
-import com.example.springboard.dto.request.CommentDeleteRequest;
+import com.example.springboard.dto.request.CommentAuthRequest;
 import com.example.springboard.dto.request.CommentRequest;
 import com.example.springboard.dto.request.CommentListRequest;
 import com.example.springboard.dto.response.CommentInsertResponse;
@@ -69,7 +69,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Transactional
-    public void deleteComment(CommentDeleteRequest request) {
+    public void deleteComment(CommentAuthRequest request) {
         // 게시글 정보 확인
         checkPost(request.getBoardId(), request.getPostNo());
 
@@ -80,6 +80,15 @@ public class CommentServiceImpl implements CommentService {
         log.info("updateComment : {}", comment);
 
         commentMapper.deleteComment(comment);
+    }
+
+
+    public void checkGuestPw(CommentAuthRequest request) {
+        // 게시글 정보 확인
+        checkPost(request.getBoardId(), request.getPostNo());
+
+        // 댓글 정보 확인 & 수정 권한 확인
+        checkComment(request.getPostNo(), request.getCommentNo(), request.getUid(), request.getGuestPw());
     }
 
     /**

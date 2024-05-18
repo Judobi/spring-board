@@ -1,6 +1,6 @@
 package com.example.springboard.controller;
 
-import com.example.springboard.dto.request.CommentDeleteRequest;
+import com.example.springboard.dto.request.CommentAuthRequest;
 import com.example.springboard.dto.request.CommentRequest;
 import com.example.springboard.dto.request.CommentListRequest;
 import com.example.springboard.dto.response.CommentInsertResponse;
@@ -70,7 +70,7 @@ public class CommentController {
     @DeleteMapping("/boards/{board-id}/comments")
     public ResponseEntity<ResultResponse> deleteComment(@PathVariable(value = "board-id") int boardId,
                                                         @RequestHeader(value = TokenProvider.ACCESS_HEADER_STRING, required = false) String accessToken,
-                                                        @Valid @RequestBody CommentDeleteRequest request){
+                                                        @Valid @RequestBody CommentAuthRequest request){
         // url과 요청한 댓글의 게시판 정보가 다를 경우
         if(boardId != request.getBoardId()){
             throw new ApiException(ErrorCode.COMMENT_URL_FAIL);
@@ -80,6 +80,13 @@ public class CommentController {
         request.setUid(uid);
         commentService.deleteComment(request);
         ResultResponse response = ResultResponse.of(ResultCode.DELETE_COMMENT_SUCCESS);
+        return new ResponseEntity<>(response, response.getStatus());
+    }
+
+    @PostMapping("/boards/{board-id}/comments/check-pw")
+    public ResponseEntity<ResultResponse> checkGuestPw(@Valid @RequestBody CommentAuthRequest request){
+        commentService.checkGuestPw(request);
+        ResultResponse response = ResultResponse.of(ResultCode.CHECK_COMMENT_SUCCESS);
         return new ResponseEntity<>(response, response.getStatus());
     }
 }
