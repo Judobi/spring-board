@@ -1,17 +1,17 @@
 package com.example.springboard.controller;
 
+import com.example.springboard.dto.request.CommentInsertRequest;
 import com.example.springboard.dto.request.CommentListRequest;
+import com.example.springboard.dto.response.CommentInsertResponse;
 import com.example.springboard.dto.response.CommentListResponse;
-import com.example.springboard.dto.response.CommentResponse;
 import com.example.springboard.global.auth.TokenProvider;
 import com.example.springboard.global.response.ResultCode;
 import com.example.springboard.global.response.ResultResponse;
 import com.example.springboard.service.BoardService;
 import com.example.springboard.service.CommentService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class CommentController {
@@ -36,4 +36,16 @@ public class CommentController {
         ResultResponse response = ResultResponse.of(ResultCode.GET_COMMENTLIST_SUCCESS, data);
         return new ResponseEntity<>(response, response.getStatus());
     }
+
+    @PostMapping("/boards/{board-id}/comments")
+    public ResponseEntity<ResultResponse> insertComment(@PathVariable(value = "board-id") int boardId,
+                                                        @RequestHeader(value = TokenProvider.ACCESS_HEADER_STRING, required = false) String accessToken,
+                                                        @Valid @RequestBody CommentInsertRequest request){
+        Integer uid = boardService.checkAuth(accessToken, boardId);
+        request.setUid(uid);
+        CommentInsertResponse data = commentService.insertComment(request);
+        ResultResponse response = ResultResponse.of(ResultCode.INSERT_COMMENT_SUCCESS, data);
+        return new ResponseEntity<>(response, response.getStatus());
+    }
+
 }
