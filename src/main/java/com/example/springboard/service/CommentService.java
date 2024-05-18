@@ -1,5 +1,6 @@
 package com.example.springboard.service;
 
+import com.example.springboard.dto.request.CommentDeleteRequest;
 import com.example.springboard.dto.request.CommentRequest;
 import com.example.springboard.dto.request.CommentListRequest;
 import com.example.springboard.dto.response.CommentInsertResponse;
@@ -13,5 +14,5 @@ public interface CommentService {
 
     void updateComment(CommentRequest request);
 
-    //void deleteComment();
+    void deleteComment(CommentDeleteRequest request);
 }

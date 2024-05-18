@@ -17,4 +17,6 @@ public interface CommentMapper {
 
     Comment getComment(int postNo, int commentNo);
 
+    void deleteComment(Comment comment);
+
 }

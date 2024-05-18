@@ -45,4 +45,10 @@
             time_modified = now()
         where post_no = #{postNo} and comment_no = #{commentNo}
     </update>
+
+    <update id="deleteComment" parameterType="com.example.springboard.vo.Comment">
+        update comments
+        set time_deleted = now()
+        where post_no = #{postNo} and comment_no = #{commentNo}
+    </update>
 </mapper>
