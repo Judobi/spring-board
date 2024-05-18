@@ -1,5 +1,6 @@
 package com.example.springboard.vo;
 
+import com.example.springboard.dto.request.CommentDeleteRequest;
 import com.example.springboard.dto.request.CommentRequest;
 
 import java.time.LocalDateTime;
@@ -24,7 +25,7 @@ public class Comment {
         this.uid = request.getUid();
         this.content = request.getContent();
 
-        // url로 직접 요철할 경우 -  uid가 있는 회원댓글 등록에도 guest id, pw를 같이 보낼경우 db에 저장되는 경우 방지
+        // url로 직접 요청할 경우 -  uid가 있는 회원댓글 등록에도 guest id, pw를 같이 보낼경우 db에 저장되는 경우 방지
         if(request.getUid()==null) {
             this.guestId = request.getGuestId();
             this.guestPw = request.getGuestPw();
@@ -33,6 +34,18 @@ public class Comment {
         // 댓글 수정시
         if(request.getCommentNo() != null){
             this.commentNo = request.getCommentNo();
+        }
+    }
+
+    // 댓글 삭제 시 사용
+    public Comment(CommentDeleteRequest request){
+        this.postNo = request.getPostNo();
+        this.uid = request.getUid();
+        this.commentNo = request.getCommentNo();
+
+        // url로 직접 요청할 경우 -  uid가 있는 회원댓글 등록에도 guest id, pw를 같이 보낼경우 db에 저장되는 경우 방지
+        if(request.getUid()==null) {
+            this.guestPw = request.getGuestPw();
         }
     }
 

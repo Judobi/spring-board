@@ -1,5 +1,6 @@
 package com.example.springboard.service.impl;
 
+import com.example.springboard.dto.request.CommentDeleteRequest;
 import com.example.springboard.dto.request.CommentRequest;
 import com.example.springboard.dto.request.CommentListRequest;
 import com.example.springboard.dto.response.CommentInsertResponse;
@@ -67,6 +68,20 @@ public class CommentServiceImpl implements CommentService {
         commentMapper.updateComment(comment);
     }
 
+    @Transactional
+    public void deleteComment(CommentDeleteRequest request) {
+        // 게시글 정보 확인
+        checkPost(request.getBoardId(), request.getPostNo());
+
+        // 댓글 정보 확인 & 수정 권한 확인
+        checkComment(request.getPostNo(), request.getCommentNo(), request.getUid(), request.getGuestPw());
+
+        Comment comment = new Comment(request);
+        log.info("updateComment : {}", comment);
+
+        commentMapper.deleteComment(comment);
+    }
+
     /**
      * 게시글 상태확인
      * @param boardId 게시판 번호
@@ -76,7 +91,14 @@ public class CommentServiceImpl implements CommentService {
     public Post checkPost(int boardId, int postNo){
         // 가져올 게시글 상태 확인
         Post post = boardMapper.getPost(boardId, postNo);
-        log.info("checkPost : {}", post.toString());
+
+        // 게시글을 조회할 수 없을 때,
+        if(post == null){
+            throw new ApiException(ErrorCode.POST_GET_FAIL);
+        }
+
+        log.info("checkPost : {}", post);
+
 
         // 삭제된 게시글에 요청할 경우
         if(post.getTimeDeleted() != null){
@@ -96,7 +118,12 @@ public class CommentServiceImpl implements CommentService {
     public void checkComment(int postNo, int commentNo, Integer uid, String guestPw){
         // 댓글 상태 확인
         Comment comment = commentMapper.getComment(postNo, commentNo);
-        log.info("checkComment : {}", comment.toString());
+
+        // 댓글을 조회할 수 없을 때
+        if(comment ==null){
+            throw new ApiException(ErrorCode.COMMENT_INFO_GET_FAIL);
+        }
+        log.info("checkComment : {}", comment);
 
         // 댓글이 삭제된 상태인 경우
         if(comment.getTimeDeleted() != null){

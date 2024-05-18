@@ -33,7 +33,8 @@ public enum ErrorCode {
     COMMENT_STATUS_DELETED("C002", HttpStatus.FORBIDDEN, "삭제된 댓글입니다."),
     COMMENT_INSERT_IDPW_BLANK("C003", HttpStatus.BAD_REQUEST, "비회원 댓글 작성 시, guestId와 guestPw 는 공백일 수 없습니다."),
     COMMENT_PWCHECK_FAIL("C004", HttpStatus.FORBIDDEN, "댓글 비밀번호가 일치하지 않습니다."),
-    COMMENT_UIDCHECK_FAIL("C005", HttpStatus.FORBIDDEN, "댓글 작성자와 유저정보가 일치하지 않습니다.");
+    COMMENT_UIDCHECK_FAIL("C005", HttpStatus.FORBIDDEN, "댓글 작성자와 유저정보가 일치하지 않습니다."),
+    COMMENT_INFO_GET_FAIL("C006", HttpStatus.NOT_FOUND, "해당 댓글을 찾을 수 없습니다.");
 
 
     private final String code;
