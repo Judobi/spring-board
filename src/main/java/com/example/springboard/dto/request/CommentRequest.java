@@ -3,8 +3,10 @@ package com.example.springboard.dto.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-public class CommentInsertRequest {
+public class CommentRequest {
+    private Integer commentNo;
     private int postNo;
+
     private int boardId;
     private Integer uid;
 
@@ -43,6 +45,10 @@ public class CommentInsertRequest {
         return guestPw;
     }
 
+    public Integer getCommentNo() {
+        return commentNo;
+    }
+
     public void setPostNo(int postNo) {
         this.postNo = postNo;
     }
@@ -65,5 +71,9 @@ public class CommentInsertRequest {
 
     public void setGuestPw(String guestPw) {
         this.guestPw = guestPw;
+    }
+
+    public void setCommentNo(int commentNo) {
+        this.commentNo = commentNo;
     }
 }

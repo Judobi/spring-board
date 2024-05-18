@@ -1,10 +1,9 @@
 package com.example.springboard.service.impl;
 
-import com.example.springboard.dto.request.CommentInsertRequest;
+import com.example.springboard.dto.request.CommentRequest;
 import com.example.springboard.dto.request.CommentListRequest;
 import com.example.springboard.dto.response.CommentInsertResponse;
 import com.example.springboard.dto.response.CommentListResponse;
-import com.example.springboard.dto.response.CommentResponse;
 import com.example.springboard.global.error.ErrorCode;
 import com.example.springboard.global.error.exception.ApiException;
 import com.example.springboard.mapper.BoardMapper;
@@ -16,8 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -41,7 +38,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Transactional
-    public CommentInsertResponse insertComment(CommentInsertRequest request) {
+    public CommentInsertResponse insertComment(CommentRequest request) {
         checkPost(request.getBoardId(), request.getPostNo());
 
         // 비회원 댓글 작성시 guest 아이디, 비밀번호 입력여부 확인
@@ -54,6 +51,20 @@ public class CommentServiceImpl implements CommentService {
 
         commentMapper.insertComment(comment);
         return new CommentInsertResponse(comment);
+    }
+
+    @Transactional
+    public void updateComment(CommentRequest request) {
+        // 게시글 정보 확인
+        checkPost(request.getBoardId(), request.getPostNo());
+
+        // 댓글 정보 확인 & 수정 권한 확인
+        checkComment(request.getPostNo(), request.getCommentNo(), request.getUid(), request.getGuestPw());
+
+        Comment comment = new Comment(request);
+        log.info("updateComment : {}", comment);
+
+        commentMapper.updateComment(comment);
     }
 
     /**
@@ -73,5 +84,36 @@ public class CommentServiceImpl implements CommentService {
         }
 
         return post;
+    }
+
+    /**
+     * 댓글 상태 및 권환 체크
+     * @param postNo 게시글 번호
+     * @param commentNo 댓글 번호
+     * @param uid 회원 - 비회원일 경우 null
+     * @param guestPw 비회원 비밀번호 - 회원일 경우 null
+     */
+    public void checkComment(int postNo, int commentNo, Integer uid, String guestPw){
+        // 댓글 상태 확인
+        Comment comment = commentMapper.getComment(postNo, commentNo);
+        log.info("checkComment : {}", comment.toString());
+
+        // 댓글이 삭제된 상태인 경우
+        if(comment.getTimeDeleted() != null){
+            throw new ApiException(ErrorCode.COMMENT_STATUS_DELETED);
+        }
+
+        // 비회원 댓글 - uid가 null
+        if(uid == null){
+            // 비회원 댓글 guest 비밀번호가 다를 경우,
+            if(!comment.getGuestPw().equals(guestPw)){
+                throw new ApiException(ErrorCode.COMMENT_PWCHECK_FAIL);
+            }
+        } else{
+            // 회원 댓글 - uid 정보가 다를 경우
+            if(!comment.getUid().equals(uid)){
+                throw new ApiException(ErrorCode.COMMENT_UIDCHECK_FAIL);
+            }
+        }
     }
 }

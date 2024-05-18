@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springboard.mapper.CommentMapper">
+
+    <!-- 댓글 목록 불러오기 -->
     <select id="getCommentList" parameterType="com.example.springboard.dto.request.CommentListRequest" resultType="com.example.springboard.dto.response.CommentResponse">
         select a.*, b.nickname
         from comments as a
@@ -12,6 +14,12 @@
         limit #{startCommentNo}, #{limit}
     </select>
 
+    <!-- 댓글 상세정보 가져오기 -->
+    <select id="getComment" resultType="com.example.springboard.vo.Comment">
+        select * from comments where comment_no = #{commentNo} and post_no = #{postNo}
+    </select>
+
+    <!-- 댓글 등록 -->
     <insert id="insertComment" parameterType="com.example.springboard.vo.Comment">
         insert into comments(
                              uid,
@@ -30,4 +38,11 @@
             select last_insert_id()
         </selectKey>
     </insert>
+
+    <update id="updateComment" parameterType="com.example.springboard.vo.Comment">
+        update comments
+        set content = #{content},
+            time_modified = now()
+        where post_no = #{postNo} and comment_no = #{commentNo}
+    </update>
 </mapper>
