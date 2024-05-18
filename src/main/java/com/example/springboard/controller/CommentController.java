@@ -1,10 +1,12 @@
 package com.example.springboard.controller;
 
-import com.example.springboard.dto.request.CommentInsertRequest;
+import com.example.springboard.dto.request.CommentRequest;
 import com.example.springboard.dto.request.CommentListRequest;
 import com.example.springboard.dto.response.CommentInsertResponse;
 import com.example.springboard.dto.response.CommentListResponse;
 import com.example.springboard.global.auth.TokenProvider;
+import com.example.springboard.global.error.ErrorCode;
+import com.example.springboard.global.error.exception.ApiException;
 import com.example.springboard.global.response.ResultCode;
 import com.example.springboard.global.response.ResultResponse;
 import com.example.springboard.service.BoardService;
@@ -40,7 +42,7 @@ public class CommentController {
     @PostMapping("/boards/{board-id}/comments")
     public ResponseEntity<ResultResponse> insertComment(@PathVariable(value = "board-id") int boardId,
                                                         @RequestHeader(value = TokenProvider.ACCESS_HEADER_STRING, required = false) String accessToken,
-                                                        @Valid @RequestBody CommentInsertRequest request){
+                                                        @Valid @RequestBody CommentRequest request){
         Integer uid = boardService.checkAuth(accessToken, boardId);
         request.setUid(uid);
         CommentInsertResponse data = commentService.insertComment(request);
@@ -48,4 +50,19 @@ public class CommentController {
         return new ResponseEntity<>(response, response.getStatus());
     }
 
+    @PutMapping("/boards/{board-id}/comments")
+    public ResponseEntity<ResultResponse> updateComment(@PathVariable(value = "board-id") int boardId,
+                                                        @RequestHeader(value = TokenProvider.ACCESS_HEADER_STRING, required = false) String accessToken,
+                                                        @Valid @RequestBody CommentRequest request){
+        // url과 요청한 댓글의 게시판 정보가 다를 경우
+        if(boardId != request.getBoardId()){
+            throw new ApiException(ErrorCode.COMMENT_URL_FAIL);
+        }
+
+        Integer uid = boardService.checkAuth(accessToken, boardId);
+        request.setUid(uid);
+        commentService.updateComment(request);
+        ResultResponse response = ResultResponse.of(ResultCode.UPDATE_COMMENT_SUCCESS);
+        return new ResponseEntity<>(response, response.getStatus());
+    }
 }

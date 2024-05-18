@@ -1,6 +1,5 @@
 package com.example.springboard.mapper;
 
-import com.example.springboard.dto.request.CommentInsertRequest;
 import com.example.springboard.dto.request.CommentListRequest;
 import com.example.springboard.dto.response.CommentResponse;
 import com.example.springboard.vo.Comment;
@@ -13,5 +12,9 @@ public interface CommentMapper {
 
     List<CommentResponse> getCommentList(CommentListRequest request);
     void insertComment(Comment request);
+
+    void updateComment(Comment request);
+
+    Comment getComment(int postNo, int commentNo);
 
 }

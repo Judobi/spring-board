@@ -1,6 +1,6 @@
 package com.example.springboard.vo;
 
-import com.example.springboard.dto.request.CommentInsertRequest;
+import com.example.springboard.dto.request.CommentRequest;
 
 import java.time.LocalDateTime;
 
@@ -18,8 +18,8 @@ public class Comment {
     public Comment() {
     }
 
-    // 댓글 등록시 사용
-    public Comment(CommentInsertRequest request){
+    // 댓글 등록, 수정 시 사용
+    public Comment(CommentRequest request){
         this.postNo = request.getPostNo();
         this.uid = request.getUid();
         this.content = request.getContent();
@@ -28,6 +28,11 @@ public class Comment {
         if(request.getUid()==null) {
             this.guestId = request.getGuestId();
             this.guestPw = request.getGuestPw();
+        }
+
+        // 댓글 수정시
+        if(request.getCommentNo() != null){
+            this.commentNo = request.getCommentNo();
         }
     }
 
