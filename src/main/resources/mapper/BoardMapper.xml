@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.springboard.mapper.BoardMapper">
+    <!--게시글 목록 불러오기 -->
+    <select id="getPostList" resultType="com.example.springboard.dto.PostResponse">
+        select a.*, b.nickname, c.comments_count
+        from POST as a
+        left join user as b
+            on b.uid = a.uid
+        left join(
+            select count(*) as comments_count, post_no
+            from COMMENTS
+            where time_deleted is null
+            group by post_no
+        ) as c
+        on a.post_no = c.post_no
+        where a.board_no = #{boardId}
+        order by a.post_no desc
+        limit #{startPostNo}, #{limit}
+    </select>
+
+    <!-- 게시판 접근권한 조회 -->
+    <select id="getBoardAccessId" resultType="int">
+        select access_id
+        from categories
+        where board_no = #{boardId}
+    </select>
+
+    <!-- 게시글 등록 -->
+    <insert id="insertPost" parameterType="com.example.springboard.vo.Post">
+    insert into post(
+                     board_no,
+                     uid,
+                     title,
+                     content,
+                     guest_id,
+                     guest_pw
+    ) values (
+             #{boardNo},
+             If(#{uid} = 0, NULL, #{uid}),
+             #{title},
+             #{content},
+             #{guestId},
+             #{guestPw}
+            )
+
+        <selectKey keyProperty="postNo" resultType="int" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <!-- 게시글 상세조회 -->
+    <select id="getPost" resultType="com.example.springboard.vo.Post">
+        select a.*, b.nickname, c.comments_count
+        from post as a
+        left join user as b on b.uid = a.uid
+        left join(
+            select count(*) as comments_count, post_no
+            from comments
+            where time_deleted is null
+            group by post_no
+            ) as c
+            on a.post_no = c.post_no
+        where a.board_no = #{boardId} and a.post_no = #{postNo}
+    </select>
+
+    <!-- 게시글 수정 -->
+    <update id="updatePost" parameterType="com.example.springboard.vo.Post">
+        update post
+        set title = #{title},
+            content = #{content},
+            time_modified = now()
+        where post_no = #{postNo} and board_no = #{boardNo}
+    </update>
+
+    <!--조회수(+1) 업데이트 -->
+    <update id="updateViews">
+        update post
+        set views = views +1
+        where post_no = #{postNo}
+    </update>
+
+    <!--게시글 삭제 -->
+    <update id="deletePost">
+        update post
+        set time_deleted = now()
+        where board_no = #{boardId} and post_no = #{postNo}
+    </update>
+
+    <!--게시글 비밀번호 일치여부 확인 -->
+    <select id="checkGuestPw" resultType="boolean">
+        select exists(select * from post where post_no = #{postNo} and guest_pw = #{guestPw})
+    </select>
+</mapper>

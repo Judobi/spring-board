@@ -5,12 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 public class UserRequest {
 
     @NotBlank(message = "아이디를 입력해주세요")
-    public String userId;
+    private String userId;
 
     @NotBlank(message = "비밀번호를 입력해주세요")
-    public String password;
+    private String password;
 
-    public String nickname;
+    private String nickname;
 
     public UserRequest(){}
 
