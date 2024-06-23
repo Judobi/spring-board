@@ -1,8 +1,8 @@
 package com.example.springboard.service;
 
-import com.example.springboard.dto.UserRequest;
-import com.example.springboard.dto.UserSignupRequest;
-import com.example.springboard.dto.UserUpdateRequest;
+import com.example.springboard.dto.request.UserRequest;
+import com.example.springboard.dto.request.UserSignupRequest;
+import com.example.springboard.dto.request.UserUpdateRequest;
 import com.example.springboard.global.auth.Token;
 import com.example.springboard.vo.User;
 

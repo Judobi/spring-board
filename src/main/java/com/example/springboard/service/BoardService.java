@@ -1,6 +1,10 @@
 package com.example.springboard.service;
 
-import com.example.springboard.dto.*;
+import com.example.springboard.dto.request.PostDeleteRequest;
+import com.example.springboard.dto.request.PostListRequest;
+import com.example.springboard.dto.request.PostPwCheckRequest;
+import com.example.springboard.dto.response.PostInsertResponse;
+import com.example.springboard.dto.response.PostResponse;
 import com.example.springboard.vo.Post;
 
 import java.util.List;
