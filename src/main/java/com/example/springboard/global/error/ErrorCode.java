@@ -30,6 +30,7 @@ public enum ErrorCode {
     POST_PWCHECK_FAIL("P002", HttpStatus.FORBIDDEN, "게시글 비밀번호가 일치하지 않습니다."),
     POST_CHANGE_AUTH_FAIL("P003", HttpStatus.FORBIDDEN, "게시글 작성자와 유저정보가 일치하지 않습니다."),
     POST_STATUS_DELETE("P004", HttpStatus.FORBIDDEN, "삭제된 게시글은 수정/삭제 할 수 없습니다."),
+    POST_USER_NOT_ACCESS("P005", HttpStatus.FORBIDDEN, "탈퇴한 유저는 게시글을 수정/삭제 할 수 없습니다."),
 
     //Comment
     COMMENT_URL_FAIL("C000", HttpStatus.BAD_REQUEST, "잘못된 요청입니다. 다시 확인해주세요."),
