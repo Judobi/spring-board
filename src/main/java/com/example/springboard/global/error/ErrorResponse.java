@@ -1,5 +1,6 @@
 package com.example.springboard.global.error;
 
+import com.example.springboard.global.response.ResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -8,30 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ErrorResponse {
-    private HttpStatus status;
-    private String code;
-    private String massage;
+public class ErrorResponse extends ResponseDto {
     private List<FieldError> errors;
 
     private ErrorResponse(ErrorCode errorCode){
-        this.code = errorCode.getCode();
-        this.status = errorCode.getStatus();
-        this.massage = errorCode.getMessage();
-        this.errors = new ArrayList<>();
+        super(errorCode.getStatus(), errorCode.getCode(), errorCode.getMessage());
     }
 
     private ErrorResponse(ErrorCode errorCode, String message){
-        this.code = errorCode.getCode();
-        this.status = errorCode.getStatus();
-        this.massage = message;
-        this.errors = new ArrayList<>();
+        super(errorCode.getStatus(), errorCode.getCode(), message);
     }
 
     private ErrorResponse(ErrorCode errorCode, List<FieldError> errors) {
-        this.status = errorCode.getStatus();
-        this.code = errorCode.getCode();
-        this.massage = errorCode.getMessage();
+        super(errorCode.getStatus(), errorCode.getCode(), errorCode.getMessage());
         this.errors = errors;
     }
 
@@ -54,23 +44,9 @@ public class ErrorResponse {
     @Override
     public String toString() {
         return "ErrorResponse{" +
-                "status=" + status +
-                ", code='" + code + '\'' +
-                ", massage='" + massage + '\'' +
-                ", errors=" + errors +
+                super.toString() +
+                "errors=" + errors +
                 '}';
-    }
-
-    public HttpStatus getStatus() {
-        return status;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getMassage() {
-        return massage;
     }
 
     public List<FieldError> getErrors() {
