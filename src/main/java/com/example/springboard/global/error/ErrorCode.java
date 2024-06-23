@@ -5,6 +5,9 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     //Common
     INVALID_INPUT_VALUE("C001", HttpStatus.BAD_REQUEST, "invalid input type"),
+    NOT_FOUND_EXCEPTION("C002", HttpStatus.NOT_FOUND, "Not Found exception"),
+    BAD_REQUEST("C003", HttpStatus.BAD_REQUEST, "Bad Request"),
+    INTERNAL_SERVER_ERROR("C004", HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error"),
 
     //Auth
     TOKEN_INVALID_ERROR("A001", HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰입니다."),

@@ -14,11 +14,17 @@ public class ErrorResponse {
     private String massage;
     private List<FieldError> errors;
 
-
     private ErrorResponse(ErrorCode errorCode){
         this.code = errorCode.getCode();
         this.status = errorCode.getStatus();
         this.massage = errorCode.getMessage();
+        this.errors = new ArrayList<>();
+    }
+
+    private ErrorResponse(ErrorCode errorCode, String message){
+        this.code = errorCode.getCode();
+        this.status = errorCode.getStatus();
+        this.massage = message;
         this.errors = new ArrayList<>();
     }
 
@@ -29,6 +35,9 @@ public class ErrorResponse {
         this.errors = errors;
     }
 
+    public static ErrorResponse of (final ErrorCode errorCode, final String message){
+        return new ErrorResponse(errorCode, message);
+    }
 
     public static ErrorResponse of (final ErrorCode errorCode, final BindingResult bindingResult){
         return new ErrorResponse(errorCode, FieldError.of(bindingResult));
