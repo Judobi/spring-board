@@ -2,10 +2,7 @@ package com.example.springboard.global.response;
 
 import org.springframework.http.HttpStatus;
 
-public class ResultResponse {
-    private HttpStatus status;
-    private String code;
-    private String message;
+public class ResultResponse extends ResponseDto{
     private Object data;
 
     public static ResultResponse of(ResultCode resultCode, Object data){
@@ -17,28 +14,12 @@ public class ResultResponse {
     }
 
     public ResultResponse(ResultCode resultCode) {
-        this.status = resultCode.getStatus();
-        this.code = resultCode.getCode();
-        this.message = resultCode.getMessage();
+        super(resultCode.getStatus(), resultCode.getCode(), resultCode.getMessage());
     }
 
     public ResultResponse(ResultCode resultCode, Object data) {
-        this.status = resultCode.getStatus();
-        this.code = resultCode.getCode();
-        this.message = resultCode.getMessage();
+        super(resultCode.getStatus(), resultCode.getCode(), resultCode.getMessage());
         this.data = data;
-    }
-
-    public HttpStatus getStatus() {
-        return status;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
     }
 
     public Object getData() {
