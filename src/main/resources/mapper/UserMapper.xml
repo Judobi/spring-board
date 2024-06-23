@@ -55,4 +55,10 @@
         where user_id=#{userId} and access_id != 0
     </select>
 
+    <select id="getUserByUid" resultType="com.example.springboard.vo.User">
+        select user_id, nickname, time_created, access_id
+        from user
+        where uid=#{uid} and access_id != 0
+    </select>
+
 </mapper>
