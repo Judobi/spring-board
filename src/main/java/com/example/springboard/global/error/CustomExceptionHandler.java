@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @RestControllerAdvice
 public class CustomExceptionHandler{
@@ -41,6 +42,13 @@ public class CustomExceptionHandler{
         return new ResponseEntity<>(response, response.getStatus());
     }
 
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<ErrorResponse> noHandlerFoundException(NoHandlerFoundException ex){
+        log.error(ex.getMessage(), ex);
+        final ErrorResponse response = ErrorResponse.of(ErrorCode.NOT_FOUND_EXCEPTION, ex.getMessage());
+        return new ResponseEntity<>(response, response.getStatus());
+    }
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponse> notFoundException(NotFoundException ex){
