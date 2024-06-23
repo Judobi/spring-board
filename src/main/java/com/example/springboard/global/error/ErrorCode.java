@@ -18,6 +18,7 @@ public enum ErrorCode {
     USER_LOGIN_FAIL("U002", HttpStatus.BAD_REQUEST, "아이디 또는 비밀번호가 틀렸습니다."),
     USER_STATUS_DELETED("U003", HttpStatus.BAD_REQUEST, "탈퇴한 회원입니다."),
     USER_PW_FAIL("U004", HttpStatus.BAD_REQUEST, "비밀번호가 틀립니다."),
+    USER_NOT_EXIST("U005", HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다."),
 
     //Board
     BOARD_AUTH_USER_FAIL("B001", HttpStatus.UNAUTHORIZED, "이 게시판은 회원 게시판입니다. 로그인해 주세요."),
