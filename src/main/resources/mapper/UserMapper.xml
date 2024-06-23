@@ -52,7 +52,7 @@
     <select id="getUserDetail" resultType="com.example.springboard.vo.User">
         select user_id, nickname, time_created
         from user
-        where user_id=#{userId}
+        where user_id=#{userId} and access_id != 0
     </select>
 
 </mapper>
