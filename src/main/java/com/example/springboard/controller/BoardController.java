@@ -15,6 +15,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class BoardController {
 
@@ -38,7 +40,7 @@ public class BoardController {
                                                       @RequestParam(required = false, defaultValue = "1") int page,
                                                       @RequestParam(required = false, defaultValue = "20") int limit){
         boardService.checkAuth(accessToken, boardId);
-        Object data = boardService.getPostList(new PostListRequest(boardId, page, limit));
+        List<PostResponse> data = boardService.getPostList(new PostListRequest(boardId, page, limit));
         ResultResponse response = ResultResponse.of(ResultCode.GET_POSTLIST_SUCCESS, data);
         return new ResponseEntity<>(response, response.getStatus());
     }
