@@ -1,28 +1,27 @@
 package com.example.springboard.global.response;
 
-import org.springframework.http.HttpStatus;
+public class ResultResponse<T> extends ResponseDto{
+    private T data;
 
-public class ResultResponse extends ResponseDto{
-    private Object data;
 
-    public static ResultResponse of(ResultCode resultCode, Object data){
-        return new ResultResponse(resultCode, data);
+    public static <T> ResultResponse<T> of(ResultCode resultCode, T data){
+        return new ResultResponse<>(resultCode, data);
     }
 
-    public static ResultResponse of(ResultCode resultCode){
-        return new ResultResponse(resultCode);
+    public static <T> ResultResponse<T> of(ResultCode resultCode){
+        return new ResultResponse<>(resultCode);
     }
 
     public ResultResponse(ResultCode resultCode) {
         super(resultCode.getStatus(), resultCode.getCode(), resultCode.getMessage());
     }
 
-    public ResultResponse(ResultCode resultCode, Object data) {
+    public ResultResponse(ResultCode resultCode, T data) {
         super(resultCode.getStatus(), resultCode.getCode(), resultCode.getMessage());
         this.data = data;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 }
