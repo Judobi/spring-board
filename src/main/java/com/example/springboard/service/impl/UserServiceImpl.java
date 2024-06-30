@@ -83,6 +83,10 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getUserDetail(String userId){
-        return userMapper.getUserDetail(userId);
+        User user = userMapper.getUserDetail(userId);
+        if(user == null){
+            throw new ApiException(ErrorCode.USER_NOT_EXIST);
+        }
+        return user;
     }
 }

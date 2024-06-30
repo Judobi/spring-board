@@ -7,7 +7,7 @@
     <select id="findIdAndPw" resultType="com.example.springboard.vo.User">
         select *
         from user
-        where user_id=#{userId} and password=#{password}
+        where user_id=#{userId} and password=#{password} and access_id != 0
     </select>
 
     <!--아이디 중복체크 -->
@@ -52,7 +52,13 @@
     <select id="getUserDetail" resultType="com.example.springboard.vo.User">
         select user_id, nickname, time_created
         from user
-        where user_id=#{userId}
+        where user_id=#{userId} and access_id != 0
+    </select>
+
+    <select id="getUserByUid" resultType="com.example.springboard.vo.User">
+        select user_id, nickname, time_created, access_id
+        from user
+        where uid=#{uid} and access_id != 0
     </select>
 
 </mapper>

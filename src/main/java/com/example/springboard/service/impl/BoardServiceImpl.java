@@ -10,6 +10,7 @@ import com.example.springboard.global.auth.TokenProvider;
 import com.example.springboard.global.error.ErrorCode;
 import com.example.springboard.global.error.exception.ApiException;
 import com.example.springboard.mapper.BoardMapper;
+import com.example.springboard.mapper.UserMapper;
 import com.example.springboard.service.BoardService;
 import com.example.springboard.vo.Post;
 import org.slf4j.Logger;
@@ -23,11 +24,13 @@ import java.util.List;
 public class BoardServiceImpl implements BoardService {
     private final Logger log = LoggerFactory.getLogger(BoardService.class);
     private final BoardMapper boardMapper;
+    private final UserMapper userMapper;
     private final TokenProvider tokenProvider;
 
-    public BoardServiceImpl(BoardMapper boardMapper, TokenProvider tokenProvider) {
+    public BoardServiceImpl(BoardMapper boardMapper, TokenProvider tokenProvider, UserMapper userMapper) {
         this.boardMapper = boardMapper;
         this.tokenProvider = tokenProvider;
+        this.userMapper = userMapper;
     }
 
     /**
@@ -116,6 +119,11 @@ public class BoardServiceImpl implements BoardService {
         //권한 확인을 위한 게시글 정보 불러오기
         Post post =  boardMapper.getPost(boardNo, postNo);
         log.info("수정할 post 정보 : {}", post);
+
+        // 탈퇴한 유저가 접근할 경우
+        if(userMapper.getUserByUid(uid) == null){
+            throw new ApiException(ErrorCode.POST_USER_NOT_ACCESS);
+        }
 
         // post가 null인 경우 잘못된 게시글 번호 요청
         if(post == null){

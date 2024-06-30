@@ -20,14 +20,14 @@ public class TokenController {
     }
 
     @PostMapping("/auth/reissue-access")
-    public ResponseEntity<ResultResponse> reissueAccessToken(@RequestHeader(value = TokenProvider.REFRESH_HEADER_STRING, required = false) String refreshToken){
+    public ResponseEntity<ResultResponse<?>> reissueAccessToken(@RequestHeader(value = TokenProvider.REFRESH_HEADER_STRING, required = false) String refreshToken){
         Token token = tokenService.reissueAccessToken(refreshToken);
 
         // 만료된 토큰
         if(token == null){
             throw new ApiException(ErrorCode.TOKEN_EXPIRED_ERROR);
         }
-        ResultResponse response = ResultResponse.of(ResultCode.TOKEN_REISSUE_SUCCESS, token);
+        ResultResponse<Token> response = ResultResponse.of(ResultCode.TOKEN_REISSUE_SUCCESS, token);
         return new ResponseEntity<>(response, response.getStatus());
     }
 
